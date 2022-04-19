@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
 
 urlpatterns = [
+    # URL slug for admin GUI
     path('admin/', admin.site.urls),
+    # Adds slugs in location/urls.py
+    path('', include('location.urls')),
+    # Adds auth functionality to rest URLs
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework'))
 ]
