@@ -1,0 +1,99 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "800",
+          "short_name": "800",
+          "types": [
+            "street_number"
+          ]
+        },
+        {
+          "long_name": "Occidental Avenue South",
+          "short_name": "Occidental Ave S",
+          "types": [
+            "route"
+          ]
+        },
+        {
+          "long_name": "SoDo",
+          "short_name": "SoDo",
+          "types": [
+            "neighborhood",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Seattle",
+          "short_name": "Seattle",
+          "types": [
+            "locality",
+            "political"
+          ]
+        },
+        {
+          "long_name": "King County",
+          "short_name": "King County",
+          "types": [
+            "administrative_area_level_2",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Washington",
+          "short_name": "WA",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "United States",
+          "short_name": "US",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "98134",
+          "short_name": "98134",
+          "types": [
+            "postal_code"
+          ]
+        }
+      ],
+      "formatted_address": "800 Occidental Ave S, Seattle, WA 98134, USA",
+      "geometry": {
+        "location": {
+          "lat": 47.5951518,
+          "lng": -122.3316393
+        },
+        "location_type": "ROOFTOP",
+        "viewport": {
+          "northeast": {
+            "lat": 47.5968001,
+            "lng": -122.3307066697085
+          },
+          "southwest": {
+            "lat": 47.5925743,
+            "lng": -122.3334046302915
+          }
+        }
+      },
+      "partial_match": true,
+      "place_id": "ChIJKxjxuaNqkFQR3CK6O1HNNqY",
+      "plus_code": {
+        "compound_code": "HMW9+38 Seattle, WA",
+        "global_code": "84VVHMW9+38"
+      },
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "stadium"
+      ]
+    }
+  ],
+  "status": "OK"
+}
