@@ -129,6 +129,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+GOOGLE_BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
