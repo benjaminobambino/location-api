@@ -16,7 +16,7 @@ class LocationAdder(generics.ListCreateAPIView):
     results = geo_json["results"][0]
     google_id = results["place_id"]
     existing_location = Location.objects.filter(google_id=google_id)
-    if (existing_location):
+    if existing_location:
       return existing_location
     else:
       address = results["formatted_address"]
@@ -26,13 +26,36 @@ class LocationAdder(generics.ListCreateAPIView):
       new_location.save()
       return Location.objects.filter(id=new_location.id)
 
-# View all locations
-class LocationList(generics.ListCreateAPIView):
+# View, update, or delete a single location
+class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Location.objects.all()
   serializer_class = LocationSerializer
 
-# View, update, or delete a single location
-class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
+# Returns distance between two locations
+class DistanceFinder(generics.ListCreateAPIView):
+  serializer_class = DistanceSerializer
+
+  def get_queryset(self):
+    # starting_location query and info:
+    starting = self.kwargs["starting"]
+    starting_id = int(starting)
+    starting_location = Location.objects.filter(id=starting_id).values()[0]
+    starting_lat = starting_location["latitude"]
+    starting_lng = starting_location["longitude"]
+    # destination query and info:
+    ending = self.kwargs["ending"]
+    ending_id = int(ending)
+    ending_location = Location.objects.filter(id=ending_id).values()[0]
+    ending_lat = ending_location["latitude"]
+    ending_lng = ending_location["longitude"]
+    print(starting_lat)
+    print(starting_lng)
+    print(ending_lat)
+    print(ending_lng)
+    # return Distance.objects.all()
+
+# View all locations
+class LocationList(generics.ListCreateAPIView):
   queryset = Location.objects.all()
   serializer_class = LocationSerializer
 
