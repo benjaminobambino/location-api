@@ -22,6 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Adds slugs in location/urls.py
     path('', include('location.urls')),
-    # Adds auth functionality to rest URLs
+    # Adds auth & api functionality to rest URLs
     path('api-auth', include('rest_framework.urls', namespace='rest_framework'))
 ]
