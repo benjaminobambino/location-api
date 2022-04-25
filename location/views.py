@@ -27,37 +27,46 @@ class LocationAdder(generics.ListCreateAPIView):
       new_location.save()
       return Location.objects.filter(id=new_location.id)
 
-# View, update, or delete a single location
-class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
-  queryset = Location.objects.all()
-  serializer_class = LocationSerializer
-
 # Returns distance between two locations
 class DistanceFinder(generics.ListCreateAPIView):
   serializer_class = DistanceSerializer
 
   def get_queryset(self):
-    # getting starting_location info:
+    # get starting_location info:
     starting = self.kwargs["starting"]
     starting_id = int(starting)
     starting_location = Location.objects.filter(id=starting_id).values()[0]
     starting_lat = starting_location["latitude"]
     starting_lng = starting_location["longitude"]
-    # getting destination info:
+    # get destination info:
     ending = self.kwargs["ending"]
     ending_id = int(ending)
     ending_location = Location.objects.filter(id=ending_id).values()[0]
     ending_lat = ending_location["latitude"]
     ending_lng = ending_location["longitude"]
     # calculating distance
-    tot_miles = haversine(starting_lng, starting_lat, ending_lng, ending_lat)
-    print(tot_miles)
-    # return Distance.objects.all()
+    total_miles = haversine(starting_lng, starting_lat, ending_lng, ending_lat)
+    rounded_miles = round(total_miles, 2)
+    total_kms = to_kms(total_miles)
+    rounded_kms = round(total_kms, 2)
+    # instantiate Location models
+    starting_instance = Location(id=starting_id, address=starting_location["address"], latitude=starting_lat, longitude=starting_lng)
+    destination_instance = Location(id=ending_id, address=ending_location["address"], latitude=ending_lat, longitude=ending_lng)
+    # add and save Distance model instance
+    new_distance = Distance(starting_location=starting_instance, destination=destination_instance, miles=rounded_miles, kilometers=rounded_kms)
+    new_distance.save()
+    return Distance.objects.filter(id=new_distance.id)
 
 # View all locations
 class LocationList(generics.ListCreateAPIView):
   queryset = Location.objects.all()
   serializer_class = LocationSerializer
+
+# View, update, or delete a single location
+class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Location.objects.all()
+  serializer_class = LocationSerializer
+
 
 # View all distances
 class DistanceList(generics.ListCreateAPIView):
