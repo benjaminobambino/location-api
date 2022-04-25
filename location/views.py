@@ -3,6 +3,7 @@ from .serializers import LocationSerializer, DistanceSerializer
 from location_django.settings import GOOGLE_API_KEY, GOOGLE_BASE_URL
 import requests
 from .models import Location, Distance
+from .helpers import haversine, to_kms
 
 # Adds and returns new Location
 class LocationAdder(generics.ListCreateAPIView):
@@ -36,22 +37,21 @@ class DistanceFinder(generics.ListCreateAPIView):
   serializer_class = DistanceSerializer
 
   def get_queryset(self):
-    # starting_location query and info:
+    # getting starting_location info:
     starting = self.kwargs["starting"]
     starting_id = int(starting)
     starting_location = Location.objects.filter(id=starting_id).values()[0]
     starting_lat = starting_location["latitude"]
     starting_lng = starting_location["longitude"]
-    # destination query and info:
+    # getting destination info:
     ending = self.kwargs["ending"]
     ending_id = int(ending)
     ending_location = Location.objects.filter(id=ending_id).values()[0]
     ending_lat = ending_location["latitude"]
     ending_lng = ending_location["longitude"]
-    print(starting_lat)
-    print(starting_lng)
-    print(ending_lat)
-    print(ending_lng)
+    # calculating distance
+    tot_miles = haversine(starting_lng, starting_lat, ending_lng, ending_lat)
+    print(tot_miles)
     # return Distance.objects.all()
 
 # View all locations
