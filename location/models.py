@@ -13,7 +13,8 @@ class Location(models.Model):
 class Distance(models.Model):
   starting_location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='distance_to_go')
   destination = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='distance_gone')
-  distance = models.DecimalField(max_digits=7, decimal_places=2)  
+  miles = models.DecimalField(max_digits=7, decimal_places=2)  
+  kilometers = models.DecimalField(max_digits=7, decimal_places=2)  
 
   def __str__(self):
     return self.distance
