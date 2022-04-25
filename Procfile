@@ -1,1 +1,1 @@
-web: gunicorn location_api.wsgi
+web: gunicorn location_django.wsgi
