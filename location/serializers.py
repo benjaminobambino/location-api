@@ -11,7 +11,15 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
 
 class DistanceSerializer(serializers.HyperlinkedModelSerializer):
 
+  starting_location = LocationSerializer(
+    read_only = True
+  )
+
+  destination = LocationSerializer(
+    read_only = True
+  )
+
   class Meta:
     model = Distance
-    fields = ('id', 'starting_location', 'destination', 'distance')
+    fields = ('id', 'miles', 'kilometers', 'starting_location', 'destination')
 
