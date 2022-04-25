@@ -52,10 +52,15 @@ class DistanceFinder(generics.ListCreateAPIView):
     # instantiate Location models
     starting_instance = Location(id=starting_id, address=starting_location["address"], latitude=starting_lat, longitude=starting_lng)
     destination_instance = Location(id=ending_id, address=ending_location["address"], latitude=ending_lat, longitude=ending_lng)
-    # add and save Distance model instance
-    new_distance = Distance(starting_location=starting_instance, destination=destination_instance, miles=rounded_miles, kilometers=rounded_kms)
-    new_distance.save()
-    return Distance.objects.filter(id=new_distance.id)
+    # check for existing Distance
+    existing_distance = Distance.objects.filter(starting_location=starting_instance).filter(destination=destination_instance)
+    if existing_distance:
+      return existing_distance
+    else:
+      # add and save Distance model instance
+      new_distance = Distance(starting_location=starting_instance, destination=destination_instance, miles=rounded_miles, kilometers=rounded_kms)
+      new_distance.save()
+      return Distance.objects.filter(id=new_distance.id)
 
 # View all locations
 class LocationList(generics.ListCreateAPIView):
