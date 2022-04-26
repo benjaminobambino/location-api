@@ -5,7 +5,7 @@ import requests
 from .models import Location, Distance
 from .helpers import haversine, to_kms
 
-# Adds and returns new Location
+# Adds and returns new Location with place or address entry
 class LocationAdder(generics.ListCreateAPIView):
   serializer_class = LocationSerializer
 
@@ -23,6 +23,35 @@ class LocationAdder(generics.ListCreateAPIView):
       address = results["formatted_address"]
       latitude = results["geometry"]["location"]["lat"]
       longitude = results["geometry"]["location"]["lng"]
+      new_location = Location(address=address, latitude=latitude, longitude=longitude, google_id=google_id)
+      new_location.save()
+      return Location.objects.filter(id=new_location.id)
+
+# Adds and returns new Location with latitude, longitude entry
+class ReverseLocationAdder(generics.ListCreateAPIView):
+  serializer_class = LocationSerializer
+
+  def get_queryset(self):
+    searched_lat = self.kwargs['lat']
+    searched_lng = self.kwargs['lng']
+    query = {'latlng': searched_lat + ',' + searched_lng, 'key': GOOGLE_API_KEY}
+    geocode = requests.get(GOOGLE_BASE_URL, params=query)
+    geo_json = geocode.json()
+    results = geo_json["results"]
+    for result in results:
+      if result["geometry"]["location"]["lat"] == float(searched_lat):
+        if result["geometry"]["location"]["lng"] == float(searched_lng):
+          result_index = results.index(result)
+          break
+    final_result = results[result_index]
+    google_id = final_result["place_id"]
+    existing_location = Location.objects.filter(google_id=google_id)
+    if existing_location:
+      return existing_location
+    else:
+      address = final_result["formatted_address"]
+      latitude = final_result["geometry"]["location"]["lat"]
+      longitude = final_result["geometry"]["location"]["lng"]
       new_location = Location(address=address, latitude=latitude, longitude=longitude, google_id=google_id)
       new_location.save()
       return Location.objects.filter(id=new_location.id)
