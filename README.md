@@ -19,7 +19,7 @@
 ### ***Getting Started***
 #### The project backend REST API has been deployed on Heroku. Here are the URL and enpoints needed to use the API:
 ### Base URL
-- https://locationdb-api.herokuapp.com/
+- `https://locationdb-api.herokuapp.com/`
 ### Primary Endpoints
 - `location/<address>`
   - Retrieves a location by place name or address.
