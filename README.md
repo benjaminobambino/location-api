@@ -21,23 +21,23 @@
 ### Base URL
 - https://locationdb-api.herokuapp.com/
 ### Primary Endpoints
-- location/\<address>
+- `location/<address>`
   - Retrieves a location by place name or address.
   - Returns ID, address, latitude, and longitude.
-- reverselocation/\<latitude>/\<longitude>
+- `reverselocation/<latitude>/<longitude>`
   - Retrieves a location by latitude-longitude.
   - Returns ID, address, latitude, and longitude.
-- distance/\<starting-location-id>/\<destination-id>
+- `distance/<starting-location-id>/<destination-id>`
   - Retrieves the distance between two locations (using the returned IDs from the location calls).
   - Returns the distance in miles and kilometers along with each location's data (ID, address, latitude, and longitude).
 ### Other Endpoints
-- locations/
+- `locations/`
   - Returns data for all previously queried locations.
-- locations/\<location-id>
+- `locations/<location-id>`
   - Returns data for a specific, previously queried location based on ID.
-- distances/
+- `distances/`
   - Returns data for all previously queried distances.
-- distances/\<distance-id>
+- `distances/<distance-id>`
   - Returns data for a specific, previously queried distances based on ID.
 ***
 ### ***Future Updates***
